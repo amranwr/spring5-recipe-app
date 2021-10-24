@@ -1,5 +1,6 @@
 package guru.springframework.domain;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
