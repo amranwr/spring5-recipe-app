@@ -1,5 +1,8 @@
 package guru.springframework.services;
 
+import guru.springframework.commands.RecipeCommand;
+import guru.springframework.converters.RecipeCommandToRecipe;
+import guru.springframework.converters.RecipeToCommandRecipe;
 import guru.springframework.domain.Recipe;
 import guru.springframework.repositories.RecipeRepository;
 import org.springframework.stereotype.Service;
@@ -30,5 +33,14 @@ public class RecipeServiceImpl implements RecipeService{
             throw  new RuntimeException("recipe is not found!!!!");
         }
         return recipeOptional.get();
+    }
+
+    @Override
+    public Recipe saveRecipeCommand(RecipeCommand recipeCommand) {
+        RecipeCommandToRecipe converter = new RecipeCommandToRecipe();
+        Recipe recipe = converter.convert(recipeCommand);
+        recipe = this.recipeRepository.save(recipe);
+        return recipe;
+
     }
 }
