@@ -1,11 +1,13 @@
 package guru.springframework.controllers;
 
 import guru.springframework.commands.RecipeCommand;
-import guru.springframework.domain.Recipe;
 import guru.springframework.services.RecipeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class RecipeController {
@@ -24,6 +26,12 @@ public class RecipeController {
     @RequestMapping(path = "recipe/new")
     public String createNewRecipe(Model model){
         model.addAttribute("recipe" , new RecipeCommand());
+        return "recipe/recipeform";
+    }
+
+    @RequestMapping(path = "/recipe/update/{id}")
+    public String updateRecipe(@PathVariable Long id ,Model model){
+        model.addAttribute("recipe",recipeRepository.findCommandById(id));
         return "recipe/recipeform";
     }
 

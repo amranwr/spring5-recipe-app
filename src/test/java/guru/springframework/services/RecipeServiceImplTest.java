@@ -54,4 +54,6 @@ class RecipeServiceImplTest {
         assertNotNull(recipeServiceImpl.getRecipeById(id));
         verify(recipeRepository,times(2)).findById(anyLong());
     }
+
+
 }

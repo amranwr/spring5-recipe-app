@@ -11,6 +11,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.ui.Model;
+
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -18,6 +20,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 class RecipeControllerTest {
     @Mock
     private RecipeService recipeRepository;
+
+    @Mock
+    private Model model;
 
     private RecipeController recipeController;
 
@@ -51,4 +56,13 @@ class RecipeControllerTest {
                 .andExpect(view().name("redirect:/show/recipe/1"));
     }
 
+    @Test
+    void updateRecipe() throws Exception{
+        when(model.addAttribute(any())).thenReturn(any());
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
+        mockMvc.perform(get("/recipe/update/1"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/recipeform"));
+
+    }
 }
