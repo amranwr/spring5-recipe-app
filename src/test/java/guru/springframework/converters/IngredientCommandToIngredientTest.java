@@ -24,7 +24,7 @@ class IngredientCommandToIngredientTest {
     void convert() {
         IngredientCommand ingredient =  new IngredientCommand();
         ingredient.setId(1L);
-        ingredient.setAmount(BigDecimal.valueOf(2));
+        ingredient.setAmout(BigDecimal.valueOf(2));
         UnitOfMeasure unitOfMeasure = new UnitOfMeasure();
 
         unitOfMeasure.setId(1L);

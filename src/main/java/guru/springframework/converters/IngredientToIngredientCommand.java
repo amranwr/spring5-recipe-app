@@ -12,8 +12,9 @@ public class IngredientToIngredientCommand implements Converter<Ingredient, Ingr
         }
         final IngredientCommand ingredientCommand= new IngredientCommand();
         ingredientCommand.setId(ingredient.getId());
-        ingredientCommand.setAmount(ingredient.getAmout());
+        ingredientCommand.setAmout(ingredient.getAmout());
         ingredientCommand.setDescription(ingredient.getDescription());
+        ingredientCommand.setUnitOfMeasure(ingredient.getUnitOfMeasure());
         return ingredientCommand;
     }
 }

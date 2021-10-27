@@ -22,4 +22,11 @@ public class IngrediantController {
         model.addAttribute("recipe",ingredientService.getRecipeCommand(Long.valueOf(recipeId)));
         return "/recipe/ingredients/list";
     }
+
+    @GetMapping
+    @RequestMapping(path = "recipe/{recipeId}/ingredient/{ingredientId}")
+    public String showIngredient(@PathVariable String recipeId,@PathVariable String ingredientId,Model model){
+        model.addAttribute("ingredient",ingredientService.getIngredient(Long.valueOf(recipeId),Long.valueOf(ingredientId)));
+        return "/recipe/ingredients/show";
+    }
 }

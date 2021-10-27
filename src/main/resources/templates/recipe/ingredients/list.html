@@ -56,7 +56,7 @@
                                 <td th:text="${ingredient.getId()}">334</td>
                                 <td th:text="${(ingredient.getAmout())+' '+(ingredient.getUnitOfMeasure().uom)
                                 +' '+(ingredient.getDescription())}">Tasty Goodnees 3</td>
-                                <td><a href="#" th:href="@{'/show/recipe/' + ${recipe.id}}">View</a></td>
+                                <td><a href="#" th:href="@{'/recipe/' +${recipe.id}+'/ingredient/'+${ingredient.getId()}}">View</a></td>
                                 <td><a href="#" th:href="@{'/recipe/update/'+${recipe.id}}">Update</a></td>
                                 <td><a href="#" th:href="@{'/deleteRecipe/'+${recipe.id}}">Delete</a></td>
                             </tr>
