@@ -30,7 +30,7 @@ public class RecipeController {
     @PostMapping
     @RequestMapping(value = "recipe")
     public String addRecipe(@ModelAttribute RecipeCommand command){
-        Recipe savedCommand = recipeRepository.saveRecipeCommand(command);
+        RecipeCommand savedCommand = recipeRepository.saveRecipeCommand(command);
         return "redirect:/show/recipe/"+ savedCommand.getId();
     }
 }

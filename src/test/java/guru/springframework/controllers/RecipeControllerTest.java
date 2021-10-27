@@ -38,6 +38,17 @@ class RecipeControllerTest {
                 .andExpect(view().name("/recipe/show"));
     }
 
-
+    @Test
+    void addRecipeTest()throws Exception{
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(1L);
+        when(recipeRepository.saveRecipeCommand(any())).thenReturn(recipeCommand);
+        mockMvc.perform(post("/recipe")
+                .param("id","1")
+                .param("description","some string"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/show/recipe/1"));
+    }
 
 }

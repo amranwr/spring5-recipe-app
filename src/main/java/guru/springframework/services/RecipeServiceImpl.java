@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.Set;
 @Service
 public class RecipeServiceImpl implements RecipeService{
@@ -36,11 +35,13 @@ public class RecipeServiceImpl implements RecipeService{
     }
 
     @Override
-    public Recipe saveRecipeCommand(RecipeCommand recipeCommand) {
+    public RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand) {
         RecipeCommandToRecipe converter = new RecipeCommandToRecipe();
+        RecipeToCommandRecipe converter2 = new RecipeToCommandRecipe();
         Recipe recipe = converter.convert(recipeCommand);
+        assert recipe != null;
         recipe = this.recipeRepository.save(recipe);
-        return recipe;
+        return converter2.convert(recipe);
 
     }
 }
