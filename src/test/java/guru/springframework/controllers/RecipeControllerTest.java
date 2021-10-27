@@ -13,6 +13,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -64,5 +66,14 @@ class RecipeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/recipeform"));
 
+    }
+
+    @Test
+    void deleteRecipe() throws Exception{
+        MockMvc mockMvc  = MockMvcBuilders.standaloneSetup(recipeController).build();
+        mockMvc.perform(get("/deleteRecipe/1"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/index"));
+        verify(recipeRepository,times(1)).deleteRecipeCommand(any());
     }
 }
