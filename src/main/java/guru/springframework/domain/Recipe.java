@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 @Data
-@EqualsAndHashCode(exclude = {"ingrediants","note",})
+@EqualsAndHashCode(exclude = {"ingredients","note",})
 @Entity
 public class Recipe {
     @Id
