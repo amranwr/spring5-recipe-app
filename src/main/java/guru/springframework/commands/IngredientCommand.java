@@ -1,5 +1,6 @@
 package guru.springframework.commands;
 
+import guru.springframework.domain.Recipe;
 import guru.springframework.domain.UnitOfMeasure;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,4 +15,5 @@ public class IngredientCommand {
     private BigDecimal amout;
     private String description;
     private UnitOfMeasure unitOfMeasure;
+    private Recipe recipe;
 }
