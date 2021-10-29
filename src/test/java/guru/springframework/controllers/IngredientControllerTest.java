@@ -3,6 +3,7 @@ package guru.springframework.controllers;
 import guru.springframework.commands.IngredientCommand;
 import guru.springframework.commands.UnitOfMeasureCommand;
 import guru.springframework.services.IngredientService;
+import guru.springframework.services.RecipeService;
 import guru.springframework.services.UnitOfMeasureService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,10 +13,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.HashSet;
-import java.util.Set;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class IngredientControllerTest {
@@ -23,7 +24,8 @@ public class IngredientControllerTest {
     private IngredientService ingredientService;
     @Mock
     private UnitOfMeasureService unitOfMeasureService;
-
+    @Mock
+    private RecipeService recipeService;
 
 
     private IngrediantController ingrediantController;
@@ -31,7 +33,7 @@ public class IngredientControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        ingrediantController = new IngrediantController(ingredientService, unitOfMeasureService);
+        ingrediantController = new IngrediantController(ingredientService, unitOfMeasureService, recipeService);
         mockMvc = MockMvcBuilders.standaloneSetup(ingrediantController).build();
     }
 
@@ -62,5 +64,18 @@ public class IngredientControllerTest {
                 .andExpect(view().name("/recipe/ingredients/form"));
         verify(ingredientService,times(1)).getIngredient(anyLong(),anyLong());
         verify(unitOfMeasureService,times(1)).getUomList();
+    }
+
+    @Test
+    public void updateingredientList()throws Exception{
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setId(1L);
+        when(ingredientService.saveIngredientCommand(any())).thenReturn(ingredientCommand);
+        mockMvc.perform(post("/ingredient")
+                .param("ingredientCommand",""))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:recipe/1/ingredient"));
+        verify(ingredientService,times(1)).saveIngredientCommand(any());
+
     }
 }

@@ -2,6 +2,7 @@ package guru.springframework.services.springDataJPA;
 
 import guru.springframework.commands.IngredientCommand;
 import guru.springframework.commands.RecipeCommand;
+import guru.springframework.converters.IngredientCommandToIngredient;
 import guru.springframework.converters.IngredientToIngredientCommand;
 import guru.springframework.converters.RecipeToCommandRecipe;
 import guru.springframework.domain.Ingredient;
@@ -52,5 +53,14 @@ public class ingredientServiceImpl implements IngredientService {
             log.error("there is no ingredient with that id :"+ingredientId);
         }
         return ingredientToIngredientCommand.convert(temp);
+    }
+
+    @Override
+    public IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand) {
+        IngredientCommandToIngredient converter = new IngredientCommandToIngredient();
+        Ingredient ingredient = ingredientRepository.save(converter.convert(ingredientCommand));
+        assert ingredient!=null;
+        IngredientToIngredientCommand converter2 = new IngredientToIngredientCommand();
+        return converter2.convert(ingredient);
     }
 }
