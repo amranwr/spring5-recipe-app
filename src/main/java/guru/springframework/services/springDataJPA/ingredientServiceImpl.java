@@ -27,13 +27,6 @@ public class ingredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public RecipeCommand getRecipeCommand(Long recipeId) {
-        RecipeToCommandRecipe recipeToCommandRecipe = new RecipeToCommandRecipe();
-        return recipeToCommandRecipe.convert(recipeRepository.findById(recipeId).get());
-
-    }
-
-    @Override
     public IngredientCommand getIngredient(Long recipeId, Long ingredientId) {
         Optional<Recipe> optionalRecipe = recipeRepository.findById(recipeId);
         if(!optionalRecipe.isPresent()){

@@ -7,8 +7,6 @@ import guru.springframework.domain.Ingredient;
 import java.util.Set;
 
 public interface IngredientService {
-    RecipeCommand getRecipeCommand(Long recipeId);
-
     IngredientCommand getIngredient(Long recipeId, Long ingredientId);
 
     IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand);

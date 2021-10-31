@@ -1,6 +1,7 @@
 package guru.springframework.controllers;
 
 import guru.springframework.commands.IngredientCommand;
+import guru.springframework.commands.RecipeCommand;
 import guru.springframework.commands.UnitOfMeasureCommand;
 import guru.springframework.services.IngredientService;
 import guru.springframework.services.RecipeService;
@@ -39,11 +40,13 @@ public class IngredientControllerTest {
 
     @Test
     void listIngredientTest() throws Exception{
-        when(ingredientService.getRecipeCommand(anyLong())).thenReturn(any());
+        RecipeCommand recipeCommand = new RecipeCommand();
+        when(recipeService.findCommandById(anyLong())).thenReturn(recipeCommand);
         mockMvc.perform(get("/recipe/1/ingredient"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/recipe/ingredients/list"));
-        verify(ingredientService,times(1)).getRecipeCommand(any());
+                .andExpect(view().name("/recipe/ingredients/list"))
+                .andExpect(model().attributeExists("recipe"));
+        verify(recipeService,times(1)).findCommandById(any());
     }
 
     @Test

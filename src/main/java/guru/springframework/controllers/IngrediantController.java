@@ -4,10 +4,11 @@ import guru.springframework.commands.IngredientCommand;
 import guru.springframework.services.IngredientService;
 import guru.springframework.services.RecipeService;
 import guru.springframework.services.UnitOfMeasureService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+@Slf4j
 @Controller
 public class IngrediantController {
     private final IngredientService ingredientService;
@@ -23,7 +24,8 @@ public class IngrediantController {
     @GetMapping
     @RequestMapping(path = "/recipe/{recipeId}/ingredient")
     public String listIngredients(@PathVariable String recipeId , Model model){
-        model.addAttribute("recipe",ingredientService.getRecipeCommand(Long.valueOf(recipeId)));
+        log.debug("getting ingredients  for that recipe id : " + recipeId);
+        model.addAttribute("recipe",recipeService.findCommandById(Long.valueOf(recipeId)));
         return "/recipe/ingredients/list";
     }
 
