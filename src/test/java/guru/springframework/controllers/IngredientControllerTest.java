@@ -51,21 +51,22 @@ public class IngredientControllerTest {
 
     @Test
     void showIngredientTest() throws Exception{
-        when(ingredientService.getIngredient(anyLong(),anyLong())).thenReturn(new IngredientCommand());
+        when(ingredientService.getIngredientByRecipeId(anyLong(),anyLong())).thenReturn(new IngredientCommand());
         mockMvc.perform(get("/recipe/1/ingredient/1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/recipe/ingredients/show"));
-        verify(ingredientService,times(1)).getIngredient(anyLong(),anyLong());
+                .andExpect(view().name("/recipe/ingredients/show"))
+                .andExpect(model().attributeExists("ingredient"));
+        verify(ingredientService,times(1)).getIngredientByRecipeId(anyLong(),anyLong());
     }
 
     @Test
     void updateIngredient()throws Exception{
-        when(ingredientService.getIngredient(anyLong(),anyLong())).thenReturn(new IngredientCommand());
+        when(ingredientService.getIngredientByRecipeId(anyLong(),anyLong())).thenReturn(new IngredientCommand());
         when(unitOfMeasureService.getUomList()).thenReturn(new HashSet<UnitOfMeasureCommand>());
         mockMvc.perform(get("/recipe/1/ingredient/1/update"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("/recipe/ingredients/form"));
-        verify(ingredientService,times(1)).getIngredient(anyLong(),anyLong());
+        verify(ingredientService,times(1)).getIngredientByRecipeId(anyLong(),anyLong());
         verify(unitOfMeasureService,times(1)).getUomList();
     }
 

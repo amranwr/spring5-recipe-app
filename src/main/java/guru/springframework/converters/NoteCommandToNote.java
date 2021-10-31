@@ -3,7 +3,9 @@ package guru.springframework.converters;
 import guru.springframework.commands.NoteCommand;
 import guru.springframework.domain.Note;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
+@Component
 public class NoteCommandToNote implements Converter<NoteCommand, Note> {
     @Override
     public Note convert(NoteCommand notecommandd) {
