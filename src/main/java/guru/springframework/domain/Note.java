@@ -1,11 +1,11 @@
 package guru.springframework.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
-@Data
-@EqualsAndHashCode(exclude = {"recipe"})
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 public class Note {
     @Lob //this is for large objects.....

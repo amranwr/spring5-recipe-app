@@ -53,10 +53,12 @@ public class IngrediantController {
     }
 
     @PostMapping
-    @RequestMapping(value = "ingredient")
+    @RequestMapping(value = "recipe/{recipeId}/ingredient/updated")
     public String updateingredientList(@ModelAttribute IngredientCommand ingredientCommand){
+        System.out.println("hello"+ingredientCommand.getDescription());
         IngredientCommand savedIngredientCommand = ingredientService.saveIngredientCommand(ingredientCommand);
-        System.out.println("hello"+savedIngredientCommand.getRecipe().getId());
+        System.out.println("ellllllllooooooooo");
+
         return "redirect:/recipe/"+savedIngredientCommand.getRecipe().getId()+"/ingredient";
     }
 }

@@ -3,6 +3,7 @@ package guru.springframework.controllers;
 import guru.springframework.commands.IngredientCommand;
 import guru.springframework.commands.RecipeCommand;
 import guru.springframework.commands.UnitOfMeasureCommand;
+import guru.springframework.domain.Recipe;
 import guru.springframework.services.IngredientService;
 import guru.springframework.services.RecipeService;
 import guru.springframework.services.UnitOfMeasureService;
@@ -65,23 +66,28 @@ public class IngredientControllerTest {
         when(unitOfMeasureService.getUomList()).thenReturn(new HashSet<UnitOfMeasureCommand>());
         mockMvc.perform(get("/recipe/1/ingredient/1/update"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/recipe/ingredients/form"));
+                .andExpect(view().name("/recipe/ingredients/form"))
+                .andExpect(model().attributeExists("uomList"))
+                .andExpect(model().attributeExists("ingredient"));
         verify(ingredientService,times(1)).getIngredientByRecipeId(anyLong(),anyLong());
         verify(unitOfMeasureService,times(1)).getUomList();
     }
-/*
+
     @Test
     public void updateingredientList()throws Exception{
         IngredientCommand ingredientCommand = new IngredientCommand();
         ingredientCommand.setId(1L);
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+        ingredientCommand.setRecipe(recipe);
         when(ingredientService.saveIngredientCommand(any())).thenReturn(ingredientCommand);
-        mockMvc.perform(post("/ingredient")
+        mockMvc.perform(post("/recipe/1/ingredient/updated")
                 .param("ingredientCommand",""))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:recipe/1/ingredient"));
+                .andExpect(view().name("redirect:/recipe/1/ingredient"));
         verify(ingredientService,times(1)).saveIngredientCommand(any());
 
     }
 
- */
+
 }

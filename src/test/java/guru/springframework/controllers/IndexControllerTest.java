@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -26,10 +27,12 @@ class IndexControllerTest {
     @Mock
     private Model model;
     private IndexController indexController;
+    private  MockMvc mockMvc;
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
         indexController = new IndexController(recipeRepository);
+        mockMvc = MockMvcBuilders.standaloneSetup(indexController).build();
     }
 
 
@@ -37,23 +40,5 @@ class IndexControllerTest {
     void testMockMVC()throws Exception{
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(indexController).build();
         mockMvc.perform(get("/")).andExpect(status().isOk()).andExpect(view().name("index"));
-    }
-
-    @Test
-    void getIndexPage() {
-        Set<Recipe> recipes = new HashSet<>();
-        Recipe recipe1 = new Recipe();
-        recipe1.setId(1L);
-        Recipe recipe2 =  new Recipe();
-
-        recipes.add(recipe1);
-        recipes.add(recipe2);
-        when(recipeRepository.getRecipes()).thenReturn(recipes);
-        ArgumentCaptor<Set<Recipe>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
-
-        assertEquals("index",indexController.getIndexPage(model));
-        verify(recipeRepository,times(1)).getRecipes();
-        verify(model,times(1)).addAttribute(eq("recipes"),argumentCaptor.capture());
-        assertEquals(2,argumentCaptor.getValue().size());
     }
 }

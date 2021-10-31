@@ -1,13 +1,12 @@
 package guru.springframework.domain;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-@Data
-@EqualsAndHashCode(exclude = {"recipe","uniteOfMeasure"})
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 public class Ingredient {
     @Id
@@ -24,9 +23,6 @@ public class Ingredient {
         this.unitOfMeasure = unitOfMeasure;
         this.amout = amout;
         this.description = description;
-    }
-    public Ingredient(){
-
     }
 
 }
