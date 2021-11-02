@@ -61,7 +61,7 @@
                                 +' '+(ingredient.getDescription())}">Tasty Goodnees 3</td>
                                 <td><a href="#" th:href="@{'/recipe/' +${recipe.id}+'/ingredient/'+${ingredient.getId()}}">View</a></td>
                                 <td><a href="#" th:href="@{'/recipe/'+${recipe.id}+'/ingredient/'+${ingredient.getId()}+'/update'}">Update</a></td>
-                                <td><a href="#" th:href="@{'/deleteRecipe/'+${recipe.id}}">Delete</a></td>
+                                <td><a href="#" th:href="@{'/recipe/'+${recipe.id}+'/ingredient/'+${ingredient.getId()}+'/delete'}">Delete</a></td>
                             </tr>
                         </table>
                     </div>

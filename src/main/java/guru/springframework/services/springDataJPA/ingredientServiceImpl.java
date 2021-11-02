@@ -1,7 +1,6 @@
 package guru.springframework.services.springDataJPA;
 
 import guru.springframework.commands.IngredientCommand;
-import guru.springframework.commands.UnitOfMeasureCommand;
 import guru.springframework.converters.IngredientCommandToIngredient;
 import guru.springframework.converters.IngredientToIngredientCommand;
 import guru.springframework.domain.Ingredient;
@@ -14,8 +13,7 @@ import guru.springframework.services.IngredientService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
-import java.util.*;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -94,6 +92,27 @@ public class ingredientServiceImpl implements IngredientService {
                     .findFirst();
             }
             return ingredientToIngredientCommand.convert(optionalIngredient.get());
+        }
+    }
+
+    @Override
+    public boolean deleteIngredient(Long recipeId, Long ingredientId) {
+        Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
+        if(recipeOptional.isPresent()){
+            Optional<Ingredient> ingredientOptional = recipeOptional.get().getIngrediants().stream()
+                    .filter(ingredient1 -> ingredient1.getId().equals(ingredientId))
+                    .findFirst();
+            if(ingredientOptional.isPresent()){
+                recipeOptional.get().getIngrediants().remove(ingredientOptional.get());
+                ingredientRepository.delete(ingredientOptional.get());
+                return true;
+            }else{
+                log.error("there is no ingredient with that id : "+ ingredientId);
+                return false;
+            }
+        }else{
+            log.error("there is no recipe with that id : "+ recipeId);
+            return false;
         }
     }
 }
