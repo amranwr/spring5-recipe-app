@@ -1,6 +1,10 @@
 package guru.springframework.controllers;
 
 import guru.springframework.commands.IngredientCommand;
+import guru.springframework.commands.RecipeCommand;
+import guru.springframework.commands.UnitOfMeasureCommand;
+import guru.springframework.domain.Recipe;
+import guru.springframework.domain.UnitOfMeasure;
 import guru.springframework.services.IngredientService;
 import guru.springframework.services.RecipeService;
 import guru.springframework.services.UnitOfMeasureService;
@@ -45,20 +49,21 @@ public class IngrediantController {
     }
 
     @GetMapping
-    @RequestMapping(path = "recipe/{recipeId}/ingredient/new}")
+    @RequestMapping(path = "recipe/{recipeId}/ingredient/new")
     public String addNewIngredient(@PathVariable String recipeId,Model model){
-        model.addAttribute("ingredient",recipeService.getRecipeById(Long.valueOf(recipeId)));
+        RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(recipeId));
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setRecipeId(recipeCommand.getId());
+        ingredientCommand.setUnitOfMeasure(new UnitOfMeasure());
+        model.addAttribute("ingredient",ingredientCommand);
         model.addAttribute("uomList",unitOfMeasureService.getUomList());
-        return "recipe/ingredients/new";
+        return "recipe/ingredients/form";
     }
 
     @PostMapping
     @RequestMapping(value = "recipe/{recipeId}/ingredient/updated")
     public String updateingredientList(@ModelAttribute IngredientCommand ingredientCommand){
-        System.out.println("hello"+ingredientCommand.getDescription());
         IngredientCommand savedIngredientCommand = ingredientService.saveIngredientCommand(ingredientCommand);
-        System.out.println("ellllllllooooooooo");
-
-        return "redirect:/recipe/"+savedIngredientCommand.getRecipe().getId()+"/ingredient";
+        return "redirect:/recipe/"+savedIngredientCommand.getRecipeId()+"/ingredient";
     }
 }

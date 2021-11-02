@@ -15,12 +15,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
-import static org.mockito.ArgumentMatchers.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 class ingredientServiceImplTest {
@@ -30,8 +29,8 @@ class ingredientServiceImplTest {
     @Mock
     private RecipeRepository recipeRepository;
     private IngredientService ingredientService;
-    private IngredientToIngredientCommand ingredientToIngredientCommand = new IngredientToIngredientCommand();
-    private IngredientCommandToIngredient ingredientCommandToIngredient = new IngredientCommandToIngredient();
+    private final IngredientToIngredientCommand ingredientToIngredientCommand = new IngredientToIngredientCommand();
+    private final IngredientCommandToIngredient ingredientCommandToIngredient = new IngredientCommandToIngredient();
     @Mock
     private UnitOfMeasureRepository unitOfMeasureRepository;
 
@@ -47,13 +46,15 @@ class ingredientServiceImplTest {
         IngredientCommand command = new IngredientCommand();
         command.setId(3L);
         command.setRecipeId(2L);
-
+        Optional<UnitOfMeasure> unitOfMeasure= Optional.of(new UnitOfMeasure());
+        unitOfMeasure.get().setId(1L);
+        command.setUnitOfMeasure(unitOfMeasure.get());
         Optional<Recipe> recipeOptional = Optional.of(new Recipe());
 
         Recipe savedRecipe = new Recipe();
         savedRecipe.addIngredient(new Ingredient());
         savedRecipe.getIngrediants().iterator().next().setId(3L);
-
+        when(unitOfMeasureRepository.findById(anyLong())).thenReturn(unitOfMeasure);
         when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
         when(recipeRepository.save(any())).thenReturn(savedRecipe);
 

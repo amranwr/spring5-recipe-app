@@ -2,7 +2,6 @@ package guru.springframework.controllers;
 
 import guru.springframework.commands.IngredientCommand;
 import guru.springframework.commands.RecipeCommand;
-import guru.springframework.commands.UnitOfMeasureCommand;
 import guru.springframework.domain.Recipe;
 import guru.springframework.services.IngredientService;
 import guru.springframework.services.RecipeService;
@@ -28,7 +27,6 @@ public class IngredientControllerTest {
     private UnitOfMeasureService unitOfMeasureService;
     @Mock
     private RecipeService recipeService;
-
 
     private IngrediantController ingrediantController;
     private  MockMvc mockMvc;
@@ -63,7 +61,7 @@ public class IngredientControllerTest {
     @Test
     void updateIngredient()throws Exception{
         when(ingredientService.getIngredientByRecipeId(anyLong(),anyLong())).thenReturn(new IngredientCommand());
-        when(unitOfMeasureService.getUomList()).thenReturn(new HashSet<UnitOfMeasureCommand>());
+        when(unitOfMeasureService.getUomList()).thenReturn(new HashSet<>());
         mockMvc.perform(get("/recipe/1/ingredient/1/update"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("/recipe/ingredients/form"))
@@ -77,6 +75,9 @@ public class IngredientControllerTest {
     public void updateingredientList()throws Exception{
         IngredientCommand ingredientCommand = new IngredientCommand();
         ingredientCommand.setId(1L);
+        //test new ingredient
+        //ingredientCommand.setId(1L);
+        ingredientCommand.setRecipeId(1L);
         Recipe recipe = new Recipe();
         recipe.setId(1L);
         ingredientCommand.setRecipe(recipe);
