@@ -40,7 +40,16 @@ public class RecipeServiceImpl implements RecipeService {
         RecipeCommandToRecipe converter = new RecipeCommandToRecipe();
         RecipeToCommandRecipe converter2 = new RecipeToCommandRecipe();
         Recipe recipe = converter.convert(recipeCommand);
-        assert recipe != null;
+        if(recipe != null){
+            Optional<Recipe> temp = recipeRepository.findById(recipe.getId());
+            if(temp.isPresent()){
+                recipe.setImage(temp.get().getImage());
+            }else{
+                throw new RuntimeException("recipe with that id is not found: "+recipe.getId());
+            }
+        }else{
+            throw new RuntimeException("recipe with that id is not found : "+recipe.getId());
+        }
         recipe = this.recipeRepository.save(recipe);
         return converter2.convert(recipe);
 
