@@ -23,6 +23,7 @@ public class Recipe {
     private String url;
     @Lob //large object
     private String directions;
+    @Lob
     private Byte[] image;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "recipe")
     private Set<Ingredient> ingrediants =  new HashSet<>();

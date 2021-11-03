@@ -103,6 +103,7 @@ public class ingredientServiceImpl implements IngredientService {
                     .filter(ingredient1 -> ingredient1.getId().equals(ingredientId))
                     .findFirst();
             if(ingredientOptional.isPresent()){
+
                 recipeOptional.get().getIngrediants().remove(ingredientOptional.get());
                 ingredientRepository.delete(ingredientOptional.get());
                 return true;
