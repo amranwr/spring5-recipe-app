@@ -16,7 +16,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.nio.charset.StandardCharsets;
 
-import static org.junit.Assert.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
@@ -46,18 +47,16 @@ class ImageControllerTest {
                 .andExpect(view().name("recipe/imageForm"));
         verify(recipeService,times(1)).findCommandById(anyLong());
     }
-/*
+
     @Test
     void uploadImage() throws Exception{
-        System.out.println("hello");
-        MockMultipartFile multiPartFile = new MockMultipartFile("filename",
+        MockMultipartFile multiPartFile = new MockMultipartFile("imagefile",
                 "testing.txt", MediaType.TEXT_PLAIN_VALUE,"amr".getBytes());
-        System.out.println("there");
         mockMvc.perform(multipart("/recipe/1/image").file(multiPartFile))
                 .andExpect(status().is3xxRedirection());
         verify(imageService,times(1)).saveImageFile(anyLong(),any());
     }
- */
+ 
     @Test
     void testingRenderImage()throws Exception{
         RecipeCommand recipeCommand = new RecipeCommand();
