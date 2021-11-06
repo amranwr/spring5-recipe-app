@@ -7,8 +7,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
+
 @Slf4j
 @Controller
 public class RecipeController {
@@ -38,7 +42,14 @@ public class RecipeController {
 
     @PostMapping
     @RequestMapping(value = "recipe")
-    public String addRecipe(@ModelAttribute RecipeCommand command){
+    public String addRecipe(@Valid @ModelAttribute("recipe") RecipeCommand command, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            bindingResult.getAllErrors().stream().forEach(objectError -> {
+                log.debug(objectError.toString());
+            });
+
+            return "recipe/recipeform";
+        }
         RecipeCommand savedCommand = recipeRepository.saveRecipeCommand(command);
         return "redirect:/show/recipe/"+ savedCommand.getId();
     }
@@ -60,14 +71,5 @@ public class RecipeController {
         return modelAndView;
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(NumberFormatException.class)
-    public ModelAndView load400ErrorPage(Exception e){
-        log.error("catching bad request exception....");
-        log.error(e.getMessage());
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("400Error");
-        modelAndView.addObject("exception",e);
-        return modelAndView;
-    }
+
 }
