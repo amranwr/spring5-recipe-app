@@ -35,7 +35,8 @@ public class IngredientControllerTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         ingrediantController = new IngrediantController(ingredientService, unitOfMeasureService, recipeService);
-        mockMvc = MockMvcBuilders.standaloneSetup(ingrediantController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(ingrediantController)
+                .setControllerAdvice(new ControllerExceptionHandler()).build();
     }
 
     @Test

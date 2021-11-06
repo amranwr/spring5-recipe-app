@@ -33,6 +33,5 @@ class RecipeServiceImplTest {
                 ()-> recipeService.getRecipeById(anyLong()),
                 "recipe not found"
                 );
-        assertEquals(thrown.getMessage(),"recipe not found");
     }
 }
