@@ -59,4 +59,15 @@ public class RecipeController {
         modelAndView.addObject("exception",exception);
         return modelAndView;
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NumberFormatException.class)
+    public ModelAndView load400ErrorPage(Exception e){
+        log.error("catching bad request exception....");
+        log.error(e.getMessage());
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("400Error");
+        modelAndView.addObject("exception",e);
+        return modelAndView;
+    }
 }
