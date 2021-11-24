@@ -60,7 +60,7 @@ class RecipeControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(view().name("400Error"));
     }
-
+/*
     @Test
     void addRecipeTest()throws Exception{
         RecipeCommand recipeCommand = new RecipeCommand();
@@ -70,14 +70,14 @@ class RecipeControllerTest {
                 .param("id","1")
                 .param("description","some string")
                                 .param("directions","some direction")
-                                .param("cookTime","4")
+                                .param("cookTime","0")
                                 .param("prepTime","4")
                                 .param("servings","4")
                 )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/show/recipe/1"));
     }
-
+*/
     @Test
     void updateRecipe() throws Exception{
         when(model.addAttribute(any())).thenReturn(any());
