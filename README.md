@@ -9,3 +9,4 @@
 - each recipe has ingredients.
 - you can update , add and delete ingredients.
 - project lombok.
+- used docker container to wire my app to mysql database.
